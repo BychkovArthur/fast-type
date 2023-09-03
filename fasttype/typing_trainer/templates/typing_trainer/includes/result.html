@@ -1,0 +1,86 @@
+{% load typing_trainer_tags %}
+<p id='add-stat-url' style="display: none;">{% url 'add_stat' %}</p>
+<p id='result-text' style="display: none;">{{text_object.pk}}</p>
+<p id='result-text-category' style="display: none;">{{text_category.pk}}</p>
+<p id='result-text-author' style="display: none;">{{text_author.pk}}</p>
+
+{% csrf_token %}
+<div class="result-window" id="result-div" style="display: none;">
+	<div class="container my-5">
+		<div class="row">
+
+			<div class="col col-lg-1 col-md-1 col-sm-1"></div>
+
+			<div class="col col-lg-10 col-md-10 col-sm-10">
+				<table class="table">
+					<thead>
+						<tr>
+                            {% if user.is_authenticated %}
+							    <th scope="col">stat</th>
+                            {% endif %}
+							<th scope="col">wpm</th>
+							<th scope="col">time</th>
+							<th scope="col">acc</th>
+							<th scope="col">miss</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+                            {% if user.is_authenticated %}
+                                <th scope="row"><a href="{% url 'user_statistics' user.pk 'general' %}">{{user.username}}</a></th>
+                            {% endif %}
+							<td id="result-td-wpm"></td>
+							<td id="result-td-time"></td>
+							<td id="result-td-acc"></td>
+							<td id="result-td-miss"></td>
+						</tr>
+						
+					</tbody>
+				</table>
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">title</th>
+							<th scope="col">symbols</th>
+							{% if text_category %}
+								<th scope="col">category</th>
+							{% endif %}
+							{% if text_author %}
+								<th scope="col">author</th>
+							{% endif %}
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><a class="text-break" href="{{text_object.get_absolute_url}}">{{text_object.title|truncatechars:20}}</a></td>
+							<td>{{text_object.length}}</td> 
+							{% if text_category %}
+								<td><a class="text-break" href="{{text_category.get_absolute_url}}">{{text_category|truncatechars:20}}</a></td>
+							{% endif %}
+							{% if text_author %}
+								<td><a class="text-break" href="{{text_author.get_absolute_url}}">{{text_author|truncatechars:20}}</a></td>
+							{% endif %}
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col col-lg-1"></div>
+
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col col-lg-1 col-md-1 col-sm-1"></div>
+			<div class="col col-lg-1 col-md-1 col-sm-1">
+				<a class="btn btn-primary" id="repeat-current-text-button" role="button" style="font-size: 1.35rem;">Повторить</a>
+			</div>
+			<div class="col col-lg-1 col-md-1 col-sm-1 result-button-next">
+				<a class="btn btn-primary" href="{% url 'index' %}" role="button" style="font-size: 1.35rem;">Далее</a>
+			</div>
+		</div>
+	</div>
+</div>

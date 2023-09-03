@@ -1,0 +1,69 @@
+{% extends 'typing_trainer/base.html' %}
+{% load typing_trainer_tags %}
+
+{% block content %}
+
+<div class="container my-4 info">
+    <div class="row">
+        <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+
+        <div class="col col-lg-8 col-md-8 col-sm-8">
+            {% if category_detail_info %}
+                <h2 class="info-header">{{category_name}}</h2>
+                <p class="mt-5" style="font-weight: bold; font-style: italic;">Тексты по этой категории</p>
+            {% else %}
+                <p class="mt-5" style="font-weight: bold; font-style: italic;">Список категорий</p>
+            {% endif %}
+
+            <table class="table">
+                <thead>
+                    {% if category_detail_info %}
+                        <tr>
+                            <th scope="col">title</th>
+                            <th scope="col">author</th>
+                            <th scope="col">language</th>
+                            <th scope="col">length</th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th scope="col">Название</th>
+                            <th scope="col">Количество текстов</th>
+                            <th scope="col">Печатали раз</th>
+                        </tr>
+                    {% endif %}
+                </thead>
+                <tbody>
+                    {% if category_detail_info %}
+                        {% for text in category_list %}
+                            <tr>
+                                <td class="text-break"><a href="{{text.get_absolute_url}}">{{text.title}}</a></td>
+                                <td class="text-break"><a href="{{text.author.get_absolute_url}}">{{text.author}}</a></td>
+                                <td>{{text.language}}</td>
+                                <td>{{text.length}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        {% for category in category_list %}
+                            <tr>
+                                <td class="text-break"><a href="{{category.get_absolute_url}}">{{category.title}}</a></td>
+                                <td>{{text_count_by_category|get_dict_value_by_key:category.pk}}</td>
+                                <td>{{count_typed_by|get_dict_value_by_key:category.pk}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+            {% if category_detail_info %}
+                <a class="btn btn-primary my-5" href="{% url 'categorylist' %}" role="button" style="font-size: 1.35rem;">К категориям</a>
+                <a class="btn btn-primary my-5" href="{% url 'updatecurrentcategory' category_slug %}" role="button" style="font-size: 1.35rem; margin-left: 2rem;">Выбрать категорию</a>
+            {% else %}
+                <a class="btn btn-primary my-5" href="{% url 'addcategory' %}" role="button" style="font-size: 1.35rem;">Добавить категорию</a>
+                <a class="btn btn-primary my-5" href="{% url 'chooserandom' 'category' %}" role="button" style="font-size: 1.35rem; margin-left: 2rem;">Выбрать случайную</a>
+            {% endif %}
+        </div>
+        
+        <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+    </div>
+</div>
+
+{% endblock content %}

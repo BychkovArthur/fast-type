@@ -1,0 +1,80 @@
+{% load typing_trainer_tags %}
+<p id="fontColor" style="display: none;">{{fontColor}}</p>
+<p id="correctLetterColor" style="display: none;">{{correctLetterColor}}</p>
+<p id="wrongLetterColor" style="display: none;">{{wrongLetterColor}}</p>
+
+<div class="text-type" id="text-to-type-div">
+    <p id="text-to-type" style="display: none;">{{text_object.text}}</p>
+    <div class="container statistics my-4">
+        <div class="row">
+
+
+            <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+            {% if user_settings.show_time %}
+                <div class="col">
+                    <p id="time">00:00</p>
+                </div>
+            {% else %}
+                <div class="col" style="display: none;">
+                    <p id="time">00:00</p>
+                </div>
+            {% endif %}
+    
+
+            {% if user_settings == None or user_settings.show_wpm %}
+                <div class="col">
+                    <p id="wpm">0</p> wpm
+                </div>
+            {% else %}
+                <div class="col" style="display: none;">
+                    <p id="wpm">0</p> wpm
+                </div>
+            {% endif %}
+
+    
+            {% if user_settings.show_symbols_count %}
+                <div class="col">
+                    <p id="correctly-typed">0</p>
+                </div>
+            {% else %}
+                <div class="col" style="display: none;">
+                    <p id="correctly-typed">0</p>
+                </div>
+            {% endif %}
+    
+
+            {% if user_settings == None or user_settings.show_percent_done %}
+                <div class="col">
+                    <p id="percent-done">0</p> %
+                </div>
+            {% else %}
+                <div class="col" style="display: none;">
+                    <p id="percent-done">0</p> %
+                </div>
+            {% endif %}
+    
+            
+            <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div></div>
+
+        <div class="main-text">
+            {% for letter in text_object.text|replace:'    ,····' %}{% if letter|ord == 10 %}<span class="letter"
+                id="letter{{forloop.counter0}}">↵</span><br
+                id="br{{forloop.counter0}}">{% else %}{% if letter|ord == 13 %}<span class="letter"
+                id="letter{{forloop.counter0}}"></span>{% else %}<span class="letter"
+                id="letter{{forloop.counter0}}">{{letter}}</span>{% endif %}{% endif %}{% endfor %}
+        </div>
+
+        <div></div>
+    </div>
+
+    <div class="current-word mt-4">
+        <p>Текущее слово:</p>
+        <p id="current-word"></p>
+    </div>
+</div>

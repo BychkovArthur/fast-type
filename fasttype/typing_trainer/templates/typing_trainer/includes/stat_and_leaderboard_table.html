@@ -1,0 +1,86 @@
+{% load typing_trainer_tags %}
+<table class="table my-5 profile-statistic-table">
+    <thead>
+        <tr>
+
+            {% if menu_selected == 'leaderboard' %}
+                <th scope="col">#</th>
+            {% endif %}
+
+
+            {% if stat_selected == 'general' %}
+                <th scope="col">rating</th>
+            {% else %}
+                <th scope="col">{{stat_selected}}</th>
+            {% endif %}
+
+
+            {% if menu_selected == 'leaderboard' %}
+                <th scope="col">user</th>
+            {% endif %}
+
+            <th scope="col">avg wpm</th>
+            <th scope="col">avg acc</th>
+            <th scope="col">best wpm</th>
+            <th scope="col">total texts</th>
+            <th scope="col">best wpm date</th>
+            {% if stat_selected == 'general' %}
+                <th scope="col">last text</th>
+            {% endif %}
+
+        </tr>
+    </thead>
+    <tbody>
+        
+            {% if stat_selected == 'general' %}
+                {% for field in statistics %}
+                    <tr>
+                        {% if menu_selected == 'leaderboard' %}
+                            <td>{{forloop.counter}}</td>
+                        {% endif %}
+
+                        <td>{{field.rating}}</td>
+
+                        {% if menu_selected == 'leaderboard' %}
+                            <td><a href="{{field.get_absolute_url}}">{{field.user}}</a></td>
+                        {% endif %}
+                        
+                        <td>{{field.average_wpm}}</td>
+                        <td>{{field.average_accuracy}}</td>
+                        <td>{{field.best_wpm}}</td>
+                        <td>{{field.count_typed}}</td>
+                        <td>{{field.best_wpm_date}}</td>
+                        <td><a href="{{field.last_text.get_absolute_url}}">{{field.last_text|truncatechars:20}}</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for group in statistics|group_by %}
+                    {% for field in group %}
+                        <tr>
+                            {% if menu_selected == 'leaderboard' %}
+                                <td>{{forloop.counter}}</td>
+                            {% endif %}
+
+                            <td class="text-break"><a href="{{field|get_absolute_url_for:stat_selected}}">{{field|getattr:stat_selected|truncatechars:20}}</a></td>
+
+                            {% if menu_selected == 'leaderboard' %}
+                                <td class="text-break"><a href="{{field.user_statistic.get_absolute_url}}">{{field.user_statistic|truncatechars:20}}</a></td>
+                            {% endif %}
+                            
+                            <td>{{field.average_wpm}}</td>
+                            <td>{{field.average_accuracy}}</td>
+                            <td>{{field.best_wpm}}</td>
+                            <td>{{field.count_typed}}</td>
+                            <td>{{field.best_wpm_date}}</td>
+                        </tr>
+                        
+                    {% endfor %}
+                    
+                    {% comment %} Добавление подчеркивания {% endcomment %}
+                    {% include 'typing_trainer/includes/group_separator.html' %}
+
+                {% endfor %}
+            {% endif %}
+        
+    </tbody>
+</table>

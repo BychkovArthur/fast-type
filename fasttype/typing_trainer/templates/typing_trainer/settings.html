@@ -1,0 +1,39 @@
+{% extends 'typing_trainer/base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col col-lg-3 col-md-3 col-sm-3"></div>
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    {% if forloop.last %}
+                        <div class="form-check form-switch my-4 theme-choice">
+                            {{ field }}                        
+                        </div>
+                    {% else %}
+                        {% if forloop.counter <= 3 %}
+                            <div class="form-check form-switch my-4">
+                                {{ field }}
+                                <label class="form-check-label settings-form" for="{{field.id_for_label}}">{{field.label}}</label>
+                            </div>
+                        {% else %}
+                            <div class="form-check form-switch my-4">
+                                <label class="form-check-label settings-form" for="{{field.id_for_label}}">{{field.label}}</label>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-lg mb-3">Сохранить</button>
+            </form>
+
+        </div>
+        <div class="col col-lg-3 col-md-3 col-sm-3"></div>
+    </div>
+</div>
+
+{% endblock content %}

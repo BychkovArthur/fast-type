@@ -1,0 +1,16 @@
+{% extends 'typing_trainer/base.html' %}
+{% load static %}
+
+{% block content %}
+
+	{% include 'typing_trainer/includes/result.html' %}
+
+	{% include 'typing_trainer/includes/text_to_type.html' %}
+
+{% endblock content %}
+
+{% block script %}
+
+	<script src="{% static 'typing_trainer/js/index.mjs' %}" type="module"></script>
+
+{% endblock script %}

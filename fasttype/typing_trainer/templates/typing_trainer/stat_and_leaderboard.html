@@ -1,0 +1,24 @@
+{% extends 'typing_trainer/base.html' %}
+{% block content %}
+<div class="conteiner text-center mt-5">
+    <div class="row">
+
+
+        <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col col-lg-8 col-md-8 col-sm-8">
+            {% if menu_selected == 'leaderboard' %}
+                <p class="statistic-paragraph">Таблица лидеров</p>
+            {% else %}
+                <p class="statistic-paragraph">Статистика пользователя <a href="{% url 'user_statistics' view.kwargs.pk 'general' %}">{{username}}</a></p>
+            {% endif %}
+
+            {% include 'typing_trainer/includes/stat_and_leaderboard_navbar.html' %}
+
+            {% include 'typing_trainer/includes/stat_and_leaderboard_table.html' %}
+
+        </div>
+        <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+    </div>
+</div>
+
+{% endblock content %}

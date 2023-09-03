@@ -1,0 +1,58 @@
+<ul class="nav nav-underline">
+
+
+    <li class="nav-item">
+
+        {% if stat_selected == 'general' %}
+            <a class="nav-link active" aria-current="page">Общая</a>
+        {% else %}
+            {% if menu_selected == 'leaderboard' %}
+                <a class="nav-link" href="{% url 'leaderboard' 'general' %}">Общая</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'user_statistics' view.kwargs.pk 'general' %}">Общая</a>
+            {% endif %}
+        {% endif %}
+
+    </li>
+
+
+    <li class="nav-item">
+        {% if stat_selected == 'text'%}
+            <a class="nav-link active" aria-current="page">По текстам</a>
+        {% else %}
+            {% if menu_selected == 'leaderboard' %}
+                <a class="nav-link" href="{% url 'leaderboard' 'by_texts' %}">По текстам</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'user_statistics' view.kwargs.pk 'by_texts' %}">По текстам</a>
+            {% endif %}
+        {% endif %}        
+    </li>
+
+
+    <li class="nav-item">
+        {% if stat_selected == 'category'%}
+            <a class="nav-link active" aria-current="page">По категориям</a>
+        {% else %}
+            {% if menu_selected == 'leaderboard' %}
+                <a class="nav-link" href="{% url 'leaderboard' 'by_categories' %}">По категориям</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'user_statistics' view.kwargs.pk 'by_categories' %}">По категориям</a>
+            {% endif %}
+        {% endif %}    
+    </li>
+
+
+    <li class="nav-item">
+        {% if stat_selected == 'author'%}
+            <a class="nav-link active" aria-current="page">По авторам</a>
+        {% else %}
+            {% if menu_selected == 'leaderboard' %}
+                <a class="nav-link" href="{% url 'leaderboard' 'by_authors' %}">По авторам</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'user_statistics' view.kwargs.pk 'by_authors' %}">По авторам</a>
+            {% endif %}
+        {% endif %}
+    </li>
+
+    
+</ul>

@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">FT</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    {% if menu_selected == 'index' %}
+                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Печатать</a>
+                    {% else %}
+                        <a class="nav-link" aria-current="page" href="{% url 'index' %}">Печатать</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if menu_selected == 'leaderboard' %}
+                        <a class="nav-link active" aria-current="page">Лидеры</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'leaderboard' 'general' %}">Лидеры</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if menu_selected == 'text' %}
+                        <a class="nav-link active" href="{% url 'textlist' %}">Тексты</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'textlist' %}">Тексты</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if menu_selected == 'author' %}
+                        <a class="nav-link active" href="{% url 'authorlist' %}">Авторы</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'authorlist' %}">Авторы</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if menu_selected == 'category' %}
+                        <a class="nav-link active" href="{% url 'categorylist' %}">Категории</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'categorylist' %}">Категории</a>
+                    {% endif %}
+                </li>
+                
+            </ul>
+            <ul class="navbar-nav">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        {% if menu_selected == 'statistics' or menu_selected == 'settings' %}
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{ user.get_username }}
+                            </a>
+                        {% else %}
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{ user.get_username }}
+                            </a>
+                        {% endif %}
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'user_statistics' user.pk 'general' %}">Статистика</a></li>
+                            <li><a class="dropdown-item" href="{% url 'settings' user.pk %}">Настройки</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        {% if menu_selected == 'registration' %}
+                            <a class="nav-link active">Регистрация</a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'registration' %}">Регистрация</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        {% if menu_selected == 'login' %}
+                            <a class="nav-link active">Вход</a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'login' %}">Вход</a>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

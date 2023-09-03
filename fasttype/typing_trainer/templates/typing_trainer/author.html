@@ -1,0 +1,74 @@
+{% extends 'typing_trainer/base.html' %}
+{% load typing_trainer_tags %}
+
+{% block content %}
+
+<div class="container my-4 info">
+    <div class="row">
+        <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+
+        <div class="col col-lg-8 col-md-8 col-sm-8">
+
+            {% if author_detail_info %}
+                <h2 class="info-header">{{author_name}}</h2>
+
+                <p class="mt-5" style="font-weight: bold; font-style: italic;">Тексты автора</p>
+            {% else %}
+                <p class="mt-5" style="font-weight: bold; font-style: italic;">Список авторов</p>
+            {% endif %}
+
+            <table class="table">
+                <thead>
+                    {% if author_detail_info %}
+                        <tr>
+                            <th scope="col">title</th>
+                            <th scope="col">category</th>
+                            <th scope="col">language</th>
+                            <th scope="col">length</th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Количество текстов</th>
+                            <th scope="col">Печатали раз</th>
+                        </tr>
+                    {% endif %}
+                </thead>
+                <tbody>
+                    {% if author_detail_info %}
+                        {% for text in author_list %}
+                            <tr>
+                                <td class="text-break"><a href="{{text.get_absolute_url}}">{{text.title}}</a></td>
+                                <td class="text-break"><a href="{{text.category.get_absolute_url}}">{{text.category}}</a></td>
+                                <td>{{text.language}}</td>
+                                <td>{{text.length}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                            {% for author in author_list %}
+                                <tr>
+                                    <td class="text-break"><a href="{{author.get_absolute_url}}">{{author.name}}</a></td>
+                                    <td>{{text_count_by_author|get_dict_value_by_key:author.pk}}</td>
+                                    <td>{{count_typed_by|get_dict_value_by_key:author.pk}}</td>
+                                </tr>
+                            {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+
+            {% if author_detail_info %}
+                <a class="btn btn-primary my-5" href="{% url 'authorlist' %}" role="button" style="font-size: 1.35rem;">К авторам</a>
+                <a class="btn btn-primary my-5" href="{% url 'updatecurrentauthor' author_slug %}" role="button" style="font-size: 1.35rem; margin-left: 2rem;">Выбрать автора</a>
+            {% else %}
+                <a class="btn btn-primary my-5" href="{% url 'addauthor' %}" role="button" style="font-size: 1.35rem;">Добавить автора</a>
+                <a class="btn btn-primary my-5" href="{% url 'chooserandom' 'author' %}" role="button" style="font-size: 1.35rem; margin-left: 2rem;">Выбрать случайного</a>
+            {% endif %}
+
+
+        </div>
+
+        <div class="col col-lg-2 col-md-2 col-sm-2"></div>
+    </div>
+</div>
+
+{% endblock content %}

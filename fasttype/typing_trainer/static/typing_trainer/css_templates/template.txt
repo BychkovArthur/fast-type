@@ -1,0 +1,92 @@
+body {
+    --bs-body-bg: rgb(BGColor);
+    --bs-body-color: rgb(fontColor);
+    --bs-border-color: rgb(borderColor);
+    --my-alt-bg-color: rgb(BGAltColor);
+    --bs-warning-text-emphasis: none;
+    --bs-warning-bg-subtle: none;
+    --bs-warning-border-subtle: none;
+    --bs-warning-text-emphasis: none;
+}
+
+.dropdown-menu {
+    --bs-dropdown-bg: none;
+    --bs-dropdown-link-active-color: rgb(fontColor);
+    --bs-dropdown-link-active-bg: rgb(activeItemColor);
+    --bs-dropdown-link-hover-bg: rgb(activeItemColor);
+    --bs-dropdown-link-hover-color: rgb(fontColor);
+    --bs-dropdown-link-color: rgb(fontColor);
+}
+
+.bg-body-tertiary {
+    background: rgb(BGColor)!important;
+    color: rgb(fontColor)!important;
+    --bs-navbar-color: none!important;
+    --bs-navbar-hover-color: rgb(activeItemColor);
+    --bs-navbar-active-color: rgb(activeItemColor);
+    --bs-navbar-brand-color: rgb(fontColor);
+    --bs-navbar-brand-hover-color: rgb(activeItemColor);  
+}
+
+.nav-underline {
+    --bs-nav-link-color: none;
+    --bs-nav-link-hover-color: rgb(activeItemColor);
+    --bs-nav-underline-link-active-color: rgb(activeItemColor);
+}
+
+.table {
+    --bs-table-color: none;
+    --bs-table-bg: none;
+    --bs-table-border-color: none;
+}
+
+.btn-primary {
+    --bs-btn-color: none;
+    --bs-btn-bg: rgb(borderColor);
+    --bs-btn-border-color: rgb(borderColor);
+    --bs-btn-hover-color: none;
+    --bs-btn-hover-bg: rgb(activeItemColor);
+    --bs-btn-hover-border-color: rgb(activeItemColor);
+    --bs-btn-active-color: none;
+    --bs-btn-active-bg: rgb(activeItemColor);
+    --bs-btn-active-border-color: rgb(activeItemColor);
+}
+
+a {
+    --bs-link-color-rgb: borderColor;
+}
+
+a:hover {
+    --bs-link-color-rgb: activeItemColor;
+}
+
+.progress {
+    --bs-progress-bar-bg: rgb(borderColor);
+}
+
+.form-control {
+    --bs-body-bg: rgb(BGAltColor);
+    --bs-border-color: none;
+    color: rgb(activeItemColor);
+    --placeholder: rgb(fontColor);
+}
+
+.form-control:focus {
+    color: rgb(activeItemColor);
+}
+
+.form-select {
+    --bs-body-bg: rgb(BGAltColor);
+    --bs-border-color: none;
+    color: rgb(activeItemColor);
+}
+
+.form-check-input {
+    border-color: rgb(borderColor);
+    background-color: rgb(BGColor);
+}
+
+.form-check-input:checked {
+    border-color: rgb(borderColor);
+    background-color: rgb(borderColor);
+}

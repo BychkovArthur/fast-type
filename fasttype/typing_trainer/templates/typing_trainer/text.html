@@ -1,0 +1,74 @@
+{% extends 'typing_trainer/base.html' %}
+{% load typing_trainer_tags %}
+
+{% block content %}
+
+<div class="container my-4 info">
+    <div class="row">
+        <div class="col col-lg-1 col-md-1 col-sm-1"></div>
+
+        <div class="col col-lg-10 col-md-10 col-sm-10">
+            {% if text_detail_info %}
+                <h2 class="info-header">{{text.title}}</h2>
+
+                <p class="mt-5" style="font-weight: bold; font-style: italic;">Информация о тексте</p>
+            {% else %}
+                <p class="mt-5" style="font-weight: bold; font-style: italic;">Список текстов</p>
+            {% endif %}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        {% if not text_detail_info %}
+                            <th scope="col">Название</th>
+                        {% endif %}
+                        <th scope="col">Категория</th>
+                        <th scope="col">Автор</th>
+                        <th scope="col">Язык</th>
+                        <th scope="col">Длина</th>
+                        <th scope="col">Печатали раз</th>
+                        {% if text_detail_info %}
+                            <th scope="col">Добавлен</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if text_detail_info %}
+                        <tr>
+                            <td class="text-break"><a href="{{text.category.get_absolute_url}}">{{text.category}}</a></td>
+                            <td class="text-break"><a href="{{text.author.get_absolute_url}}">{{text.author}}</a></td>
+                            <td>{{text.language}}</td>
+                            <td>{{text.length}}</td>
+                            <td>{{count_typed_by|get_dict_value_by_key:text.pk}}</td>
+                            <td>{{text.time_create}}</td>
+                        </tr>
+                    {% else %}
+                        {% for text in text_list %}
+                            <tr>
+                                <td class="text-break"><a href="{{text.get_absolute_url}}">{{text.title}}</a></td>
+                                <td class="text-break"><a href="{{text.category.get_absolute_url}}">{{text.category}}</a></td>
+                                <td class="text-break"><a href="{{text.author.get_absolute_url}}">{{text.author}}</a></td>
+                                <td>{{text.language}}</td>
+                                <td>{{text.length}}</td>
+                                <td>{{count_typed_by|get_dict_value_by_key:text.pk}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+            {% if text_detail_info %}
+                <p class="mt-5" style="font-weight: bold; font-style: italic;">Текст</p>
+                <p style="white-space: pre-wrap;">{{text.text}}</p>
+                <a class="btn btn-primary my-5" href="{% url 'textlist' %}" role="button" style="font-size: 1.35rem;">К текстам</a>
+                <a class="btn btn-primary my-5" href="{% url 'updatecurrenttext' text_slug %}" role="button" style="font-size: 1.35rem; margin-left: 2rem;">Печатать</a>
+            {% else %}
+                <a class="btn btn-primary my-5" href="{% url 'addtext' %}" role="button" style="font-size: 1.35rem;">Добавить текст</a>
+                <a class="btn btn-primary my-5" href="{% url 'chooserandom' 'text' %}" role="button" style="font-size: 1.35rem; margin-left: 2rem;">Выбрать случайный</a>
+            {% endif %}
+        </div>
+
+        <div class="col col-lg-1 col-md-1 col-sm-1"></div>
+    </div>
+</div>
+
+{% endblock content %}
